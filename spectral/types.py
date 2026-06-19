@@ -89,3 +89,33 @@ class ObservablePipelineResult:
     graph_spectral: GraphSpectralObservables
     dmd: DMDObservables
     koopman: KoopmanObservables
+    motion: MotionPrediction | None = None
+
+
+@dataclass(frozen=True)
+class MotionClassificationConfig:
+    """Thresholds for heuristic motion classification (tunable)."""
+
+    traveling_polarization_threshold: float = 0.55
+    swarming_polarization_threshold: float = 0.35
+    swarming_heading_variance: float = 1.5
+    milling_tangential_threshold: float = 0.55
+    milling_angular_threshold: float = 500.0
+    fountain_radial_threshold: float = 15.0
+    fountain_spread_zscore: float = 2.0
+    fountain_window: int = 15
+    hydro_sub_threshold: float = 0.45
+    smooth_window: int = 5
+
+
+@dataclass
+class MotionPrediction:
+    """Per-frame collective motion labels."""
+
+    labels: np.ndarray  # (T,) int — MotionLabel values
+    hydro_sub_labels: np.ndarray  # (T,) int — HydroSubLabel values (-1 = none)
+    confidence: np.ndarray  # (T,)
+    features: np.ndarray  # (T, F)
+    feature_names: list[str]
+    label_names: list[str]
+    hydro_sub_label_names: list[str]

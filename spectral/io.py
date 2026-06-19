@@ -10,6 +10,7 @@ from spectral.types import (
     DMDObservables,
     GraphSpectralObservables,
     KoopmanObservables,
+    MotionPrediction,
 )
 
 
@@ -90,4 +91,33 @@ def load_koopman(path: str | Path) -> KoopmanObservables:
         operator=data["operator"],
         feature_names=[str(x) for x in data["feature_names"].tolist()],
         one_step_prediction=one_step if one_step.size else None,
+    )
+
+
+def save_motion_prediction(pred: MotionPrediction, path: str | Path) -> Path:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(
+        path,
+        labels=pred.labels,
+        hydro_sub_labels=pred.hydro_sub_labels,
+        confidence=pred.confidence,
+        features=pred.features,
+        feature_names=np.array(pred.feature_names, dtype=object),
+        label_names=np.array(pred.label_names, dtype=object),
+        hydro_sub_label_names=np.array(pred.hydro_sub_label_names, dtype=object),
+    )
+    return path
+
+
+def load_motion_prediction(path: str | Path) -> MotionPrediction:
+    data = np.load(path, allow_pickle=True)
+    return MotionPrediction(
+        labels=data["labels"],
+        hydro_sub_labels=data["hydro_sub_labels"],
+        confidence=data["confidence"],
+        features=data["features"],
+        feature_names=[str(x) for x in data["feature_names"].tolist()],
+        label_names=[str(x) for x in data["label_names"].tolist()],
+        hydro_sub_label_names=[str(x) for x in data["hydro_sub_label_names"].tolist()],
     )

@@ -7,11 +7,19 @@ from pathlib import Path
 
 from spectral.dmd.analyzer import DMDAnalyzer
 from spectral.graph.laplacian import GraphSpectralAnalyzer
-from spectral.io import load_dmd, load_graph_spectral, save_dmd, save_graph_spectral, save_koopman
+from spectral.io import (
+    load_dmd,
+    load_graph_spectral,
+    save_dmd,
+    save_graph_spectral,
+    save_koopman,
+    save_motion_prediction,
+)
 from spectral.koopman.operator import fit_koopman_operator
+from spectral.motion.classifier import classify_motion
 from spectral.pipeline import run_observable_pipeline
 from spectral.state import load_trajectory
-from spectral.types import DMDConfig, InteractionGraphConfig, KoopmanLiftConfig
+from spectral.types import DMDConfig, InteractionGraphConfig, KoopmanLiftConfig, MotionClassificationConfig
 
 
 def _add_common_args(parser: argparse.ArgumentParser) -> None:
@@ -77,6 +85,15 @@ def cmd_koopman(args: argparse.Namespace) -> None:
     print(f"Saved Koopman observables -> {output_dir / 'koopman_observables.npz'}")
 
 
+def cmd_motion(args: argparse.Namespace) -> None:
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    trajectory = load_trajectory(args.input, fps=args.fps)
+    motion = classify_motion(trajectory, MotionClassificationConfig())
+    save_motion_prediction(motion, output_dir / "motion_prediction.npz")
+    print(f"Saved motion prediction -> {output_dir / 'motion_prediction.npz'}")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Spectral fish-school observable pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -106,6 +123,10 @@ def build_parser() -> argparse.ArgumentParser:
     koopman.add_argument("--graph-input", default=None)
     koopman.add_argument("--dmd-input", default=None)
     koopman.set_defaults(func=cmd_koopman)
+
+    motion = sub.add_parser("motion", help="Collective motion classification from loc_vel data")
+    _add_common_args(motion)
+    motion.set_defaults(func=cmd_motion)
 
     return parser
 

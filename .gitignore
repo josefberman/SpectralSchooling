@@ -1,3 +1,4 @@
 *.mp4
 /schooling-datasets/*
+/results/*
 __pycache__/
