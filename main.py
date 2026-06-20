@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 import argparse
+import json
+from dataclasses import asdict
 from pathlib import Path
+
+import numpy as np
 
 from spectral.dmd.analyzer import DMDAnalyzer
 from spectral.graph.laplacian import GraphSpectralAnalyzer
@@ -16,7 +20,14 @@ from spectral.io import (
     save_motion_prediction,
 )
 from spectral.koopman.operator import fit_koopman_operator
+from spectral.motion.annotations import load_motion_annotations
 from spectral.motion.classifier import classify_motion
+from spectral.motion.evaluation import (
+    confusion_matrix,
+    evaluate_motion_prediction,
+    save_motion_config,
+    tune_motion_thresholds,
+)
 from spectral.pipeline import run_observable_pipeline
 from spectral.state import load_trajectory
 from spectral.types import DMDConfig, InteractionGraphConfig, KoopmanLiftConfig, MotionClassificationConfig
@@ -89,9 +100,59 @@ def cmd_motion(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     trajectory = load_trajectory(args.input, fps=args.fps)
-    motion = classify_motion(trajectory, MotionClassificationConfig())
+    config = MotionClassificationConfig()
+    if args.config:
+        from spectral.motion.evaluation import load_motion_config
+
+        config = load_motion_config(args.config)
+    motion = classify_motion(trajectory, config)
     save_motion_prediction(motion, output_dir / "motion_prediction.npz")
     print(f"Saved motion prediction -> {output_dir / 'motion_prediction.npz'}")
+
+
+def cmd_motion_eval(args: argparse.Namespace) -> None:
+    annotations = load_motion_annotations(args.annotations)
+    trajectory = load_trajectory(args.input, fps=args.fps or annotations.fps)
+    config = MotionClassificationConfig()
+    if args.config:
+        from spectral.motion.evaluation import load_motion_config
+
+        config = load_motion_config(args.config)
+    motion = classify_motion(trajectory, config)
+    metrics = evaluate_motion_prediction(motion, annotations)
+    print(metrics.summary())
+    if args.show_confusion:
+        mat, names = confusion_matrix(motion, annotations)
+        print("\nConfusion matrix (rows=ground truth, cols=predicted):")
+        header = " " * 22 + "  ".join(f"{n[:12]:>12s}" for n in names)
+        print(header)
+        for i, name in enumerate(names):
+            row = "  ".join(f"{mat[i, j]:12d}" for j in range(len(names)))
+            print(f"{name[:20]:20s}  {row}")
+
+
+def cmd_motion_tune(args: argparse.Namespace) -> None:
+    annotations = load_motion_annotations(args.annotations)
+    trajectory = load_trajectory(args.input, fps=args.fps or annotations.fps)
+    base = MotionClassificationConfig()
+    if args.config:
+        from spectral.motion.evaluation import load_motion_config
+
+        base = load_motion_config(args.config)
+    result = tune_motion_thresholds(
+        trajectory,
+        annotations,
+        base_config=base,
+        trials=args.trials,
+        seed=args.seed,
+    )
+    print("Best thresholds:")
+    print(json.dumps(asdict(result.config), indent=2))
+    print()
+    print(result.metrics.summary())
+    if args.save_config:
+        save_motion_config(result.config, args.save_config)
+        print(f"\nSaved tuned config -> {args.save_config}")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -126,7 +187,30 @@ def build_parser() -> argparse.ArgumentParser:
 
     motion = sub.add_parser("motion", help="Collective motion classification from loc_vel data")
     _add_common_args(motion)
+    motion.add_argument("--config", default=None, help="JSON motion threshold config")
     motion.set_defaults(func=cmd_motion)
+
+    motion_eval = sub.add_parser("motion-eval", help="Evaluate motion classifier on manual labels")
+    motion_eval.add_argument("--input", "-i", required=True, help="loc_vel_data.h5 or .csv")
+    motion_eval.add_argument("--annotations", "-a", required=True, help="Annotation JSON file")
+    motion_eval.add_argument("--fps", type=float, default=None)
+    motion_eval.add_argument("--config", default=None, help="JSON motion threshold config")
+    motion_eval.add_argument("--show-confusion", action="store_true")
+    motion_eval.set_defaults(func=cmd_motion_eval)
+
+    motion_tune = sub.add_parser("motion-tune", help="Tune motion thresholds on manual labels")
+    motion_tune.add_argument("--input", "-i", required=True, help="loc_vel_data.h5 or .csv")
+    motion_tune.add_argument("--annotations", "-a", required=True, help="Annotation JSON file")
+    motion_tune.add_argument("--fps", type=float, default=None)
+    motion_tune.add_argument("--config", default=None, help="Starting threshold config JSON")
+    motion_tune.add_argument("--trials", type=int, default=4000)
+    motion_tune.add_argument("--seed", type=int, default=0)
+    motion_tune.add_argument(
+        "--save-config",
+        default=None,
+        help="Write best thresholds to this JSON path",
+    )
+    motion_tune.set_defaults(func=cmd_motion_tune)
 
     return parser
 

@@ -83,29 +83,22 @@ class KoopmanObservables:
     one_step_prediction: np.ndarray | None = None  # (T-1, d_z)
 
 
-@dataclass
-class ObservablePipelineResult:
-    trajectory: FishSchoolTrajectory
-    graph_spectral: GraphSpectralObservables
-    dmd: DMDObservables
-    koopman: KoopmanObservables
-    motion: MotionPrediction | None = None
-
-
 @dataclass(frozen=True)
 class MotionClassificationConfig:
-    """Thresholds for heuristic motion classification (tunable)."""
+    """Thresholds for heuristic motion classification (tunable).
 
-    traveling_polarization_threshold: float = 0.55
-    swarming_polarization_threshold: float = 0.35
-    swarming_heading_variance: float = 1.5
-    milling_tangential_threshold: float = 0.55
-    milling_angular_threshold: float = 500.0
-    fountain_radial_threshold: float = 15.0
-    fountain_spread_zscore: float = 2.0
-    fountain_window: int = 15
-    hydro_sub_threshold: float = 0.45
-    smooth_window: int = 5
+    Decision priority: fountain -> expansion/contraction -> traveling -> milling -> swarming.
+    """
+
+    traveling_polarization_threshold: float = 0.7
+    swarming_polarization_threshold: float = 0.4
+    milling_polarization_ceiling: float = 0.65
+    milling_tangential_threshold: float = 0.65
+    milling_angular_threshold: float = 0.4
+    fountain_radial_threshold: float = 1.0
+    expansion_contraction_radial_threshold: float = 0.35
+    expansion_contraction_tangential_ceiling: float = 0.60
+    smooth_window: int = 7
 
 
 @dataclass
@@ -113,9 +106,16 @@ class MotionPrediction:
     """Per-frame collective motion labels."""
 
     labels: np.ndarray  # (T,) int — MotionLabel values
-    hydro_sub_labels: np.ndarray  # (T,) int — HydroSubLabel values (-1 = none)
     confidence: np.ndarray  # (T,)
     features: np.ndarray  # (T, F)
     feature_names: list[str]
     label_names: list[str]
-    hydro_sub_label_names: list[str]
+
+
+@dataclass
+class ObservablePipelineResult:
+    trajectory: FishSchoolTrajectory
+    graph_spectral: GraphSpectralObservables
+    dmd: DMDObservables
+    koopman: KoopmanObservables
+    motion: MotionPrediction | None = None

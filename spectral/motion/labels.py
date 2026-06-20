@@ -11,14 +11,8 @@ class MotionLabel(IntEnum):
     MILLING = 2
     SWARMING = 3
     FOUNTAIN_EVASION = 4
-    HYDRODYNAMIC = 5
-
-
-class HydroSubLabel(IntEnum):
-    NONE = -1
-    INLINE = 0
-    PHALANX = 1
-    STAGGERED = 2
+    EXPANSION_BURST = 5
+    CONTRACTION_COMPACTION = 6
 
 
 MOTION_LABELS = {
@@ -27,24 +21,15 @@ MOTION_LABELS = {
     MotionLabel.MILLING: "milling",
     MotionLabel.SWARMING: "swarming",
     MotionLabel.FOUNTAIN_EVASION: "fountain_evasion",
-    MotionLabel.HYDRODYNAMIC: "hydrodynamic",
-}
-
-HYDRO_SUB_LABELS = {
-    HydroSubLabel.NONE: "none",
-    HydroSubLabel.INLINE: "inline",
-    HydroSubLabel.PHALANX: "phalanx",
-    HydroSubLabel.STAGGERED: "staggered",
+    MotionLabel.EXPANSION_BURST: "expansion_burst",
+    MotionLabel.CONTRACTION_COMPACTION: "contraction_compaction",
 }
 
 FEATURE_NAMES = [
-    "polarization",
-    "angular_momentum",
+    "directional_polarization",
+    "rotational_polarization",
+    "norm_angular_momentum",
     "tangential_order",
     "mean_radial_velocity",
     "spread",
-    "heading_variance",
-    "inline_score",
-    "phalanx_score",
-    "staggered_score",
 ]

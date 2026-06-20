@@ -22,10 +22,7 @@ def test_polarized_traveling():
         pos[t, :, 0] = np.arange(N) * 20 + t * 10
         pos[t, :, 1] = np.zeros(N)
     pred = classify_motion(_traj(pos, vel))
-    ordered = (
-        (pred.labels == MotionLabel.TRAVELING_POLARIZED)
-        | (pred.labels == MotionLabel.HYDRODYNAMIC)
-    ).mean()
+    ordered = (pred.labels == MotionLabel.TRAVELING_POLARIZED).mean()
     assert ordered > 0.5
 
 

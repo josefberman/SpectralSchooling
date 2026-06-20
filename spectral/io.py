@@ -13,6 +13,17 @@ from spectral.types import (
     MotionPrediction,
 )
 
+__all__ = [
+    "load_dmd",
+    "load_graph_spectral",
+    "load_koopman",
+    "load_motion_prediction",
+    "save_dmd",
+    "save_graph_spectral",
+    "save_koopman",
+    "save_motion_prediction",
+]
+
 
 def save_graph_spectral(obs: GraphSpectralObservables, path: str | Path) -> Path:
     path = Path(path)
@@ -100,12 +111,10 @@ def save_motion_prediction(pred: MotionPrediction, path: str | Path) -> Path:
     np.savez_compressed(
         path,
         labels=pred.labels,
-        hydro_sub_labels=pred.hydro_sub_labels,
         confidence=pred.confidence,
         features=pred.features,
         feature_names=np.array(pred.feature_names, dtype=object),
         label_names=np.array(pred.label_names, dtype=object),
-        hydro_sub_label_names=np.array(pred.hydro_sub_label_names, dtype=object),
     )
     return path
 
@@ -114,10 +123,8 @@ def load_motion_prediction(path: str | Path) -> MotionPrediction:
     data = np.load(path, allow_pickle=True)
     return MotionPrediction(
         labels=data["labels"],
-        hydro_sub_labels=data["hydro_sub_labels"],
         confidence=data["confidence"],
         features=data["features"],
         feature_names=[str(x) for x in data["feature_names"].tolist()],
         label_names=[str(x) for x in data["label_names"].tolist()],
-        hydro_sub_label_names=[str(x) for x in data["hydro_sub_label_names"].tolist()],
     )

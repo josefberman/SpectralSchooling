@@ -1,0 +1,30 @@
+{
+  "dataset": "0103",
+  "fps": 29.97,
+  "source": "manual video review — partial coverage, easy-to-identify behaviors",
+  "label_aliases": {
+    "polarized": "traveling_polarized",
+    "fountain": "fountain_evasion"
+  },
+  "segments": [
+    {"start": "00:17", "end": "00:24", "label": "swarming"},
+    {"start": "00:34", "end": "00:36", "label": "swarming"},
+    {"start": "00:36", "end": "00:38", "label": "fountain"},
+    {"start": "00:46", "end": "00:54", "label": "polarized"},
+    {"start": "00:58", "end": "01:11", "label": "swarming"},
+    {"start": "01:11", "end": "01:33", "label": "milling"},
+    {"start": "02:13", "end": "02:20", "label": "swarming"},
+    {"start": "02:27", "end": "02:33", "label": "polarized"},
+    {"start": "03:57", "end": "04:08", "label": "polarized"},
+    {"start": "04:47", "end": "04:52", "label": "polarized"},
+    {"start": "07:59", "end": "08:09", "label": "polarized"},
+    {"start": "08:24", "end": "08:34", "label": "polarized"},
+    {"start": "09:22", "end": "09:28", "label": "milling"},
+    {"start": "09:50", "end": "10:04", "label": "polarized"},
+    {"start": "10:39", "end": "10:53", "label": "milling"},
+    {"start": "11:02", "end": "11:09", "label": "polarized"},
+    {"start": "11:39", "end": "11:50", "label": "polarized"},
+    {"start": "12:17", "end": "12:31", "label": "polarized"},
+    {"start": "13:33", "end": "13:40", "label": "milling"}
+  ]
+}
