@@ -1,0 +1,12 @@
+{
+  "0103": {"fish_group": "70_fish", "fps": 29.97},
+  "0107": {"fish_group": "70_fish", "fps": 29.97},
+  "0124": {"fish_group": "70_fish", "fps": 29.97},
+  "0084": {"fish_group": "30_fish", "fps": 29.97},
+  "0115": {"fish_group": "30_fish", "fps": 29.97},
+  "0120": {"fish_group": "30_fish", "fps": 29.97},
+  "0066": {"fish_group": "10_fish", "fps": 29.97},
+  "0105": {"fish_group": "10_fish", "fps": 29.97},
+  "0126": {"fish_group": "10_fish", "fps": 29.97},
+  "0200": {"fish_group": "150_fish", "fps": 29.97}
+}

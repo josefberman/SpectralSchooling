@@ -1,4 +1,4 @@
-"""Load manual motion-type annotations for threshold tuning."""
+"""Load manual motion-type annotations for classifier training."""
 
 from __future__ import annotations
 
@@ -9,6 +9,9 @@ from pathlib import Path
 import numpy as np
 
 from spectral.motion.labels import MOTION_LABELS, MotionLabel
+
+ANNOTATIONS_DIR = Path(__file__).resolve().parents[2] / "annotations"
+DEFAULT_LABEL_ALIASES_PATH = ANNOTATIONS_DIR / "_label_aliases.json"
 
 
 @dataclass(frozen=True)
@@ -73,13 +76,21 @@ def _resolve_label(name: str, aliases: dict[str, str]) -> tuple[MotionLabel, str
     return label, canonical
 
 
+def load_default_label_aliases() -> dict[str, str]:
+    if not DEFAULT_LABEL_ALIASES_PATH.exists():
+        return {}
+    with DEFAULT_LABEL_ALIASES_PATH.open(encoding="utf-8") as f:
+        return {str(k): str(v) for k, v in json.load(f).items()}
+
+
 def load_motion_annotations(path: str | Path) -> MotionAnnotationSet:
     path = Path(path)
     with path.open(encoding="utf-8") as f:
         data = json.load(f)
 
     fps = float(data["fps"])
-    aliases = {str(k): str(v) for k, v in data.get("label_aliases", {}).items()}
+    aliases = load_default_label_aliases()
+    aliases.update({str(k): str(v) for k, v in data.get("label_aliases", {}).items()})
     segments: list[MotionSegmentAnnotation] = []
     for item in data["segments"]:
         label, label_name = _resolve_label(str(item["label"]), aliases)

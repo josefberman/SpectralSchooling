@@ -40,6 +40,17 @@ def test_load_0103_annotations():
     assert ann.segments[3].label == MotionLabel.TRAVELING_POLARIZED
 
 
+def test_all_annotation_files_load():
+    directory = Path("annotations")
+    files = sorted(directory.glob("*_motion.json"))
+    if not files:
+        pytest.skip("no annotation files")
+    assert len(files) == 10
+    for path in files:
+        ann = load_motion_annotations(path)
+        assert ann.segments
+
+
 def test_frame_labels_overlap(tmp_path: Path):
     ann_path = tmp_path / "ann.json"
     ann_path.write_text(

@@ -1,0 +1,13 @@
+{
+  "dataset": "0126",
+  "fps": 29.97,
+  "source": "manual video review — partial coverage",
+  "segments": [
+    {"start": "00:00", "end": "00:28", "label": "polarized"},
+    {"start": "00:53", "end": "04:21", "label": "polarized"},
+    {"start": "04:34", "end": "06:43", "label": "polarized"},
+    {"start": "09:40", "end": "09:48", "label": "milling"},
+    {"start": "10:01", "end": "11:26", "label": "polarized"},
+    {"start": "11:42", "end": "11:51", "label": "milling"}
+  ]
+}

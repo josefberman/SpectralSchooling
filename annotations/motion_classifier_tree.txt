@@ -1,0 +1,424 @@
+|--- directional_polarization <= 0.71
+|   |--- spread <= 111.21
+|   |   |--- rotational_polarization <= 0.74
+|   |   |   |--- mean_radial_velocity <= 0.35
+|   |   |   |   |--- norm_angular_momentum <= -0.50
+|   |   |   |   |   |--- tangential_order <= 0.72
+|   |   |   |   |   |   |--- spread <= 81.49
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.44
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- directional_polarization >  0.44
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- spread >  81.49
+|   |   |   |   |   |   |   |--- rotational_polarization <= 0.50
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |   |--- rotational_polarization >  0.50
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |--- tangential_order >  0.72
+|   |   |   |   |   |   |--- directional_polarization <= 0.66
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.05
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- directional_polarization >  0.05
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- directional_polarization >  0.66
+|   |   |   |   |   |   |   |--- spread <= 40.05
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- spread >  40.05
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |--- norm_angular_momentum >  -0.50
+|   |   |   |   |   |--- norm_angular_momentum <= 0.70
+|   |   |   |   |   |   |--- mean_radial_velocity <= 0.27
+|   |   |   |   |   |   |   |--- tangential_order <= 0.58
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- tangential_order >  0.58
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |--- mean_radial_velocity >  0.27
+|   |   |   |   |   |   |   |--- tangential_order <= 0.61
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |   |--- tangential_order >  0.61
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |--- norm_angular_momentum >  0.70
+|   |   |   |   |   |   |--- directional_polarization <= 0.57
+|   |   |   |   |   |   |   |--- norm_angular_momentum <= 1.16
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- norm_angular_momentum >  1.16
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |--- directional_polarization >  0.57
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= -0.19
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  -0.19
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |--- mean_radial_velocity >  0.35
+|   |   |   |   |--- spread <= 55.24
+|   |   |   |   |   |--- directional_polarization <= 0.53
+|   |   |   |   |   |   |--- rotational_polarization <= 0.29
+|   |   |   |   |   |   |   |--- tangential_order <= 0.66
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- tangential_order >  0.66
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- rotational_polarization >  0.29
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= 0.35
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  0.35
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |--- directional_polarization >  0.53
+|   |   |   |   |   |   |--- tangential_order <= 0.52
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= 0.58
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  0.58
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- tangential_order >  0.52
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.57
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- directional_polarization >  0.57
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |--- spread >  55.24
+|   |   |   |   |   |--- directional_polarization <= 0.15
+|   |   |   |   |   |   |--- rotational_polarization <= 0.47
+|   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |--- rotational_polarization >  0.47
+|   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |--- directional_polarization >  0.15
+|   |   |   |   |   |   |--- mean_radial_velocity <= 0.44
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.45
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |   |--- directional_polarization >  0.45
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- mean_radial_velocity >  0.44
+|   |   |   |   |   |   |   |--- rotational_polarization <= 0.15
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- rotational_polarization >  0.15
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |--- rotational_polarization >  0.74
+|   |   |   |--- spread <= 67.38
+|   |   |   |   |--- spread <= 58.24
+|   |   |   |   |   |--- norm_angular_momentum <= -0.71
+|   |   |   |   |   |   |--- norm_angular_momentum <= -3.09
+|   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |--- norm_angular_momentum >  -3.09
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.65
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- directional_polarization >  0.65
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |--- norm_angular_momentum >  -0.71
+|   |   |   |   |   |   |--- spread <= 42.20
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= 0.22
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  0.22
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- spread >  42.20
+|   |   |   |   |   |   |   |--- norm_angular_momentum <= 0.56
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- norm_angular_momentum >  0.56
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |--- spread >  58.24
+|   |   |   |   |   |--- norm_angular_momentum <= -0.90
+|   |   |   |   |   |   |--- directional_polarization <= 0.27
+|   |   |   |   |   |   |   |--- rotational_polarization <= 0.98
+|   |   |   |   |   |   |   |   |--- class: fountain_evasion
+|   |   |   |   |   |   |   |--- rotational_polarization >  0.98
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- directional_polarization >  0.27
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= -0.61
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  -0.61
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |--- norm_angular_momentum >  -0.90
+|   |   |   |   |   |   |--- tangential_order <= 0.67
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= 0.67
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  0.67
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |--- tangential_order >  0.67
+|   |   |   |   |   |   |   |--- spread <= 58.35
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- spread >  58.35
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |--- spread >  67.38
+|   |   |   |   |--- norm_angular_momentum <= 1.21
+|   |   |   |   |   |--- tangential_order <= 0.66
+|   |   |   |   |   |   |--- norm_angular_momentum <= -0.52
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.55
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- directional_polarization >  0.55
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- norm_angular_momentum >  -0.52
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.46
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- directional_polarization >  0.46
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- tangential_order >  0.66
+|   |   |   |   |   |   |--- directional_polarization <= 0.60
+|   |   |   |   |   |   |   |--- tangential_order <= 0.70
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- tangential_order >  0.70
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- directional_polarization >  0.60
+|   |   |   |   |   |   |   |--- spread <= 87.94
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- spread >  87.94
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |--- norm_angular_momentum >  1.21
+|   |   |   |   |   |--- spread <= 74.79
+|   |   |   |   |   |   |--- spread <= 71.25
+|   |   |   |   |   |   |   |--- tangential_order <= 0.70
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- tangential_order >  0.70
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- spread >  71.25
+|   |   |   |   |   |   |   |--- rotational_polarization <= 0.96
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |   |--- rotational_polarization >  0.96
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |--- spread >  74.79
+|   |   |   |   |   |   |--- mean_radial_velocity <= 0.63
+|   |   |   |   |   |   |   |--- tangential_order <= 0.72
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- tangential_order >  0.72
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- mean_radial_velocity >  0.63
+|   |   |   |   |   |   |   |--- rotational_polarization <= 0.86
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |   |--- rotational_polarization >  0.86
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |--- spread >  111.21
+|   |   |--- tangential_order <= 0.76
+|   |   |   |--- norm_angular_momentum <= -1.64
+|   |   |   |   |--- class: milling
+|   |   |   |--- norm_angular_momentum >  -1.64
+|   |   |   |   |--- rotational_polarization <= 0.95
+|   |   |   |   |   |--- norm_angular_momentum <= 1.43
+|   |   |   |   |   |   |--- spread <= 133.28
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= 0.25
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  0.25
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |--- spread >  133.28
+|   |   |   |   |   |   |   |--- norm_angular_momentum <= 1.07
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |   |--- norm_angular_momentum >  1.07
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |--- norm_angular_momentum >  1.43
+|   |   |   |   |   |   |--- mean_radial_velocity <= 0.84
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= 0.06
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  0.06
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- mean_radial_velocity >  0.84
+|   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |--- rotational_polarization >  0.95
+|   |   |   |   |   |--- mean_radial_velocity <= 0.31
+|   |   |   |   |   |   |--- mean_radial_velocity <= 0.21
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.49
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- directional_polarization >  0.49
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- mean_radial_velocity >  0.21
+|   |   |   |   |   |   |   |--- norm_angular_momentum <= 0.49
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- norm_angular_momentum >  0.49
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- mean_radial_velocity >  0.31
+|   |   |   |   |   |   |--- norm_angular_momentum <= 1.47
+|   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |   |--- norm_angular_momentum >  1.47
+|   |   |   |   |   |   |   |--- rotational_polarization <= 0.95
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- rotational_polarization >  0.95
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |--- tangential_order >  0.76
+|   |   |   |--- directional_polarization <= 0.47
+|   |   |   |   |--- mean_radial_velocity <= 0.48
+|   |   |   |   |   |--- mean_radial_velocity <= 0.43
+|   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |--- mean_radial_velocity >  0.43
+|   |   |   |   |   |   |--- class: milling
+|   |   |   |   |--- mean_radial_velocity >  0.48
+|   |   |   |   |   |--- spread <= 147.80
+|   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- spread >  147.80
+|   |   |   |   |   |   |--- class: milling
+|   |   |   |--- directional_polarization >  0.47
+|   |   |   |   |--- class: expansion_burst
+|--- directional_polarization >  0.71
+|   |--- directional_polarization <= 0.77
+|   |   |--- spread <= 145.78
+|   |   |   |--- norm_angular_momentum <= -0.94
+|   |   |   |   |--- spread <= 68.51
+|   |   |   |   |   |--- spread <= 53.01
+|   |   |   |   |   |   |--- tangential_order <= 0.69
+|   |   |   |   |   |   |   |--- norm_angular_momentum <= -1.03
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- norm_angular_momentum >  -1.03
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- tangential_order >  0.69
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.75
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- directional_polarization >  0.75
+|   |   |   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |   |--- spread >  53.01
+|   |   |   |   |   |   |--- rotational_polarization <= 0.72
+|   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- rotational_polarization >  0.72
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.77
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- directional_polarization >  0.77
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |--- spread >  68.51
+|   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |--- norm_angular_momentum >  -0.94
+|   |   |   |   |--- norm_angular_momentum <= 0.14
+|   |   |   |   |   |--- directional_polarization <= 0.77
+|   |   |   |   |   |   |--- spread <= 83.94
+|   |   |   |   |   |   |   |--- spread <= 50.05
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- spread >  50.05
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- spread >  83.94
+|   |   |   |   |   |   |   |--- spread <= 86.11
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- spread >  86.11
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- directional_polarization >  0.77
+|   |   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |--- norm_angular_momentum >  0.14
+|   |   |   |   |   |--- spread <= 64.98
+|   |   |   |   |   |   |--- rotational_polarization <= 0.74
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.71
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- directional_polarization >  0.71
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- rotational_polarization >  0.74
+|   |   |   |   |   |   |   |--- spread <= 45.70
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- spread >  45.70
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |--- spread >  64.98
+|   |   |   |   |   |   |--- rotational_polarization <= 0.19
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= -0.35
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  -0.35
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- rotational_polarization >  0.19
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= -0.47
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  -0.47
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |--- spread >  145.78
+|   |   |   |--- mean_radial_velocity <= -0.25
+|   |   |   |   |--- norm_angular_momentum <= -0.44
+|   |   |   |   |   |--- class: expansion_burst
+|   |   |   |   |--- norm_angular_momentum >  -0.44
+|   |   |   |   |   |--- norm_angular_momentum <= -0.22
+|   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- norm_angular_momentum >  -0.22
+|   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |--- mean_radial_velocity >  -0.25
+|   |   |   |   |--- class: traveling_polarized
+|   |--- directional_polarization >  0.77
+|   |   |--- directional_polarization <= 0.81
+|   |   |   |--- rotational_polarization <= 0.79
+|   |   |   |   |--- spread <= 48.79
+|   |   |   |   |   |--- spread <= 47.63
+|   |   |   |   |   |   |--- spread <= 37.20
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= -0.99
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  -0.99
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- spread >  37.20
+|   |   |   |   |   |   |   |--- tangential_order <= 0.58
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- tangential_order >  0.58
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- spread >  47.63
+|   |   |   |   |   |   |--- norm_angular_momentum <= -0.20
+|   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- norm_angular_momentum >  -0.20
+|   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |--- spread >  48.79
+|   |   |   |   |   |--- rotational_polarization <= 0.74
+|   |   |   |   |   |   |--- rotational_polarization <= 0.06
+|   |   |   |   |   |   |   |--- norm_angular_momentum <= 0.07
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- norm_angular_momentum >  0.07
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |--- rotational_polarization >  0.06
+|   |   |   |   |   |   |   |--- rotational_polarization <= 0.68
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- rotational_polarization >  0.68
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- rotational_polarization >  0.74
+|   |   |   |   |   |   |--- spread <= 65.45
+|   |   |   |   |   |   |   |--- spread <= 60.40
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- spread >  60.40
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |--- spread >  65.45
+|   |   |   |   |   |   |   |--- norm_angular_momentum <= -1.23
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- norm_angular_momentum >  -1.23
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |--- rotational_polarization >  0.79
+|   |   |   |   |--- spread <= 64.63
+|   |   |   |   |   |--- spread <= 46.61
+|   |   |   |   |   |   |--- tangential_order <= 0.43
+|   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- tangential_order >  0.43
+|   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- spread >  46.61
+|   |   |   |   |   |   |--- norm_angular_momentum <= -1.30
+|   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- norm_angular_momentum >  -1.30
+|   |   |   |   |   |   |   |--- norm_angular_momentum <= 1.03
+|   |   |   |   |   |   |   |   |--- class: milling
+|   |   |   |   |   |   |   |--- norm_angular_momentum >  1.03
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |--- spread >  64.63
+|   |   |   |   |   |--- norm_angular_momentum <= -2.49
+|   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- norm_angular_momentum >  -2.49
+|   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |--- directional_polarization >  0.81
+|   |   |   |--- norm_angular_momentum <= -1.37
+|   |   |   |   |--- norm_angular_momentum <= -1.37
+|   |   |   |   |   |--- spread <= 30.93
+|   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- spread >  30.93
+|   |   |   |   |   |   |--- rotational_polarization <= 0.46
+|   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- rotational_polarization >  0.46
+|   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |--- norm_angular_momentum >  -1.37
+|   |   |   |   |   |--- class: expansion_burst
+|   |   |   |--- norm_angular_momentum >  -1.37
+|   |   |   |   |--- directional_polarization <= 0.87
+|   |   |   |   |   |--- directional_polarization <= 0.87
+|   |   |   |   |   |   |--- spread <= 48.53
+|   |   |   |   |   |   |   |--- spread <= 47.71
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- spread >  47.71
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- spread >  48.53
+|   |   |   |   |   |   |   |--- rotational_polarization <= 0.90
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- rotational_polarization >  0.90
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- directional_polarization >  0.87
+|   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |--- directional_polarization >  0.87
+|   |   |   |   |   |--- mean_radial_velocity <= -0.41
+|   |   |   |   |   |   |--- mean_radial_velocity <= -0.41
+|   |   |   |   |   |   |   |--- directional_polarization <= 0.89
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |   |--- directional_polarization >  0.89
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- mean_radial_velocity >  -0.41
+|   |   |   |   |   |   |   |--- mean_radial_velocity <= -0.41
+|   |   |   |   |   |   |   |   |--- class: swarming
+|   |   |   |   |   |   |   |--- mean_radial_velocity >  -0.41
+|   |   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |--- mean_radial_velocity >  -0.41
+|   |   |   |   |   |   |--- tangential_order <= 0.22
+|   |   |   |   |   |   |   |--- class: traveling_polarized
+|   |   |   |   |   |   |--- tangential_order >  0.22
+|   |   |   |   |   |   |   |--- class: traveling_polarized

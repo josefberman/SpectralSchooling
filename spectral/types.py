@@ -84,20 +84,10 @@ class KoopmanObservables:
 
 
 @dataclass(frozen=True)
-class MotionClassificationConfig:
-    """Thresholds for heuristic motion classification (tunable).
+class MotionClassifierConfig:
+    """Configuration for the trained decision-tree motion classifier."""
 
-    Decision priority: fountain -> expansion/contraction -> traveling -> milling -> swarming.
-    """
-
-    traveling_polarization_threshold: float = 0.7
-    swarming_polarization_threshold: float = 0.4
-    milling_polarization_ceiling: float = 0.65
-    milling_tangential_threshold: float = 0.65
-    milling_angular_threshold: float = 0.4
-    fountain_radial_threshold: float = 1.0
-    expansion_contraction_radial_threshold: float = 0.35
-    expansion_contraction_tangential_ceiling: float = 0.60
+    model_path: str = "annotations/motion_classifier.joblib"
     smooth_window: int = 7
 
 

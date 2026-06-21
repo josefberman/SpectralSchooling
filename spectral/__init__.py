@@ -11,7 +11,7 @@ from spectral.types import (
     InteractionGraphConfig,
     KoopmanLiftConfig,
     KoopmanObservables,
-    MotionClassificationConfig,
+    MotionClassifierConfig,
     MotionPrediction,
     ObservablePipelineResult,
 )
@@ -24,7 +24,7 @@ __all__ = [
     "InteractionGraphConfig",
     "KoopmanLiftConfig",
     "KoopmanObservables",
-    "MotionClassificationConfig",
+    "MotionClassifierConfig",
     "MotionClassifier",
     "MotionPrediction",
     "ObservablePipelineResult",

@@ -1,11 +1,7 @@
 {
   "dataset": "0103",
   "fps": 29.97,
-  "source": "manual video review — partial coverage, easy-to-identify behaviors",
-  "label_aliases": {
-    "polarized": "traveling_polarized",
-    "fountain": "fountain_evasion"
-  },
+  "source": "manual video review — partial coverage",
   "segments": [
     {"start": "00:17", "end": "00:24", "label": "swarming"},
     {"start": "00:34", "end": "00:36", "label": "swarming"},

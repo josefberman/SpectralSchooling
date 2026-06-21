@@ -16,7 +16,7 @@ from spectral.types import (
     DMDConfig,
     InteractionGraphConfig,
     KoopmanLiftConfig,
-    MotionClassificationConfig,
+    MotionClassifierConfig,
     ObservablePipelineResult,
 )
 
@@ -28,7 +28,7 @@ def run_observable_pipeline(
     graph_config: InteractionGraphConfig | None = None,
     dmd_config: DMDConfig | None = None,
     koopman_config: KoopmanLiftConfig | None = None,
-    motion_config: MotionClassificationConfig | None = None,
+    motion_config: MotionClassifierConfig | None = None,
     fps: float | None = None,
     save_outputs: bool = True,
 ) -> ObservablePipelineResult:
@@ -38,7 +38,7 @@ def run_observable_pipeline(
     graph_config = graph_config or InteractionGraphConfig()
     dmd_config = dmd_config or DMDConfig()
     koopman_config = koopman_config or KoopmanLiftConfig()
-    motion_config = motion_config or MotionClassificationConfig()
+    motion_config = motion_config or MotionClassifierConfig()
 
     trajectory = load_trajectory(trajectory_path, fps=fps)
     dt = dmd_config.dt or trajectory.dt

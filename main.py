@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import json
-from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
@@ -22,15 +20,23 @@ from spectral.io import (
 from spectral.koopman.operator import fit_koopman_operator
 from spectral.motion.annotations import load_motion_annotations
 from spectral.motion.classifier import classify_motion
-from spectral.motion.evaluation import (
-    confusion_matrix,
-    evaluate_motion_prediction,
-    save_motion_config,
-    tune_motion_thresholds,
+from spectral.motion.datasets import (
+    ANNOTATIONS_DIR,
+    DEFAULT_MODEL_PATH,
+    DEFAULT_TREE_TEXT_PATH,
+    list_annotation_files,
+    trajectory_path,
+)
+from spectral.motion.evaluation import confusion_matrix, evaluate_motion_prediction
+from spectral.motion.tree import (
+    MotionTreeTrainConfig,
+    save_motion_tree_model,
+    save_training_report,
+    train_motion_tree,
 )
 from spectral.pipeline import run_observable_pipeline
 from spectral.state import load_trajectory
-from spectral.types import DMDConfig, InteractionGraphConfig, KoopmanLiftConfig, MotionClassificationConfig
+from spectral.types import DMDConfig, InteractionGraphConfig, KoopmanLiftConfig, MotionClassifierConfig
 
 
 def _add_common_args(parser: argparse.ArgumentParser) -> None:
@@ -66,7 +72,7 @@ def cmd_dmd(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    if args.graph-input:
+    if args.graph_input:
         graph_spectral = load_graph_spectral(args.graph_input)
     else:
         trajectory = load_trajectory(args.input, fps=args.fps)
@@ -100,11 +106,7 @@ def cmd_motion(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     trajectory = load_trajectory(args.input, fps=args.fps)
-    config = MotionClassificationConfig()
-    if args.config:
-        from spectral.motion.evaluation import load_motion_config
-
-        config = load_motion_config(args.config)
+    config = MotionClassifierConfig(model_path=args.model) if args.model else MotionClassifierConfig()
     motion = classify_motion(trajectory, config)
     save_motion_prediction(motion, output_dir / "motion_prediction.npz")
     print(f"Saved motion prediction -> {output_dir / 'motion_prediction.npz'}")
@@ -113,11 +115,7 @@ def cmd_motion(args: argparse.Namespace) -> None:
 def cmd_motion_eval(args: argparse.Namespace) -> None:
     annotations = load_motion_annotations(args.annotations)
     trajectory = load_trajectory(args.input, fps=args.fps or annotations.fps)
-    config = MotionClassificationConfig()
-    if args.config:
-        from spectral.motion.evaluation import load_motion_config
-
-        config = load_motion_config(args.config)
+    config = MotionClassifierConfig(model_path=args.model) if args.model else MotionClassifierConfig()
     motion = classify_motion(trajectory, config)
     metrics = evaluate_motion_prediction(motion, annotations)
     print(metrics.summary())
@@ -131,28 +129,58 @@ def cmd_motion_eval(args: argparse.Namespace) -> None:
             print(f"{name[:20]:20s}  {row}")
 
 
-def cmd_motion_tune(args: argparse.Namespace) -> None:
-    annotations = load_motion_annotations(args.annotations)
-    trajectory = load_trajectory(args.input, fps=args.fps or annotations.fps)
-    base = MotionClassificationConfig()
-    if args.config:
-        from spectral.motion.evaluation import load_motion_config
+def cmd_motion_eval_all(args: argparse.Namespace) -> None:
+    config = MotionClassifierConfig(model_path=args.model) if args.model else MotionClassifierConfig()
+    macro_f1s: list[float] = []
+    for ann_path in list_annotation_files(Path(args.annotations_dir)):
+        ann = load_motion_annotations(ann_path)
+        traj_path = trajectory_path(ann.dataset)
+        trajectory = load_trajectory(traj_path, fps=ann.fps)
+        motion = classify_motion(trajectory, config)
+        metrics = evaluate_motion_prediction(motion, ann)
+        macro_f1s.append(metrics.macro_f1)
+        print(f"\n=== {ann.dataset} ===")
+        print(metrics.summary())
+    if macro_f1s:
+        print(f"\nMean macro F1 across datasets: {float(np.mean(macro_f1s)):.3f}")
 
-        base = load_motion_config(args.config)
-    result = tune_motion_thresholds(
-        trajectory,
-        annotations,
-        base_config=base,
-        trials=args.trials,
-        seed=args.seed,
+
+def cmd_motion_train(args: argparse.Namespace) -> None:
+    train_config = MotionTreeTrainConfig(
+        max_depth=args.max_depth,
+        min_samples_leaf=args.min_samples_leaf,
+        smooth_window=args.smooth_window,
+        random_state=args.seed,
     )
-    print("Best thresholds:")
-    print(json.dumps(asdict(result.config), indent=2))
+    model, loo_metrics, train_metrics = train_motion_tree(
+        annotations_dir=Path(args.annotations_dir),
+        train_config=train_config,
+        tune=not args.no_tune,
+    )
+
+    model_path = Path(args.model_output)
+    tree_path = Path(args.tree_output)
+    report_path = Path(args.report_output)
+
+    save_motion_tree_model(model, model_path)
+    tree_path.parent.mkdir(parents=True, exist_ok=True)
+    tree_path.write_text(model.export_rules(), encoding="utf-8")
+    save_training_report(model, loo_metrics, train_metrics, report_path)
+
+    print("Selected hyperparameters:")
+    print(f"  max_depth={model.train_config.max_depth}")
+    print(f"  min_samples_leaf={model.train_config.min_samples_leaf}")
+    print(f"  smooth_window={model.train_config.smooth_window}")
+    print(f"  nodes={model.tree.tree_.node_count}, depth={model.tree.get_depth()}")
     print()
-    print(result.metrics.summary())
-    if args.save_config:
-        save_motion_config(result.config, args.save_config)
-        print(f"\nSaved tuned config -> {args.save_config}")
+    print("Training fit (all labeled frames):")
+    print(train_metrics.summary())
+    print("\nLeave-one-dataset-out:")
+    for dataset, metrics in sorted(loo_metrics.items()):
+        print(f"  {dataset}: acc={100 * metrics.accuracy:.1f}%  macro-F1={metrics.macro_f1:.3f}")
+    print(f"\nSaved model -> {model_path}")
+    print(f"Saved tree rules -> {tree_path}")
+    print(f"Saved report -> {report_path}")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -187,30 +215,50 @@ def build_parser() -> argparse.ArgumentParser:
 
     motion = sub.add_parser("motion", help="Collective motion classification from loc_vel data")
     _add_common_args(motion)
-    motion.add_argument("--config", default=None, help="JSON motion threshold config")
+    motion.add_argument("--model", default=None, help="Path to trained motion_classifier.joblib")
     motion.set_defaults(func=cmd_motion)
 
     motion_eval = sub.add_parser("motion-eval", help="Evaluate motion classifier on manual labels")
     motion_eval.add_argument("--input", "-i", required=True, help="loc_vel_data.h5 or .csv")
     motion_eval.add_argument("--annotations", "-a", required=True, help="Annotation JSON file")
     motion_eval.add_argument("--fps", type=float, default=None)
-    motion_eval.add_argument("--config", default=None, help="JSON motion threshold config")
+    motion_eval.add_argument("--model", default=None, help="Path to trained motion_classifier.joblib")
     motion_eval.add_argument("--show-confusion", action="store_true")
     motion_eval.set_defaults(func=cmd_motion_eval)
 
-    motion_tune = sub.add_parser("motion-tune", help="Tune motion thresholds on manual labels")
-    motion_tune.add_argument("--input", "-i", required=True, help="loc_vel_data.h5 or .csv")
-    motion_tune.add_argument("--annotations", "-a", required=True, help="Annotation JSON file")
-    motion_tune.add_argument("--fps", type=float, default=None)
-    motion_tune.add_argument("--config", default=None, help="Starting threshold config JSON")
-    motion_tune.add_argument("--trials", type=int, default=4000)
-    motion_tune.add_argument("--seed", type=int, default=0)
-    motion_tune.add_argument(
-        "--save-config",
-        default=None,
-        help="Write best thresholds to this JSON path",
+    motion_eval_all = sub.add_parser(
+        "motion-eval-all",
+        help="Evaluate motion classifier on all annotation files",
     )
-    motion_tune.set_defaults(func=cmd_motion_tune)
+    motion_eval_all.add_argument(
+        "--annotations-dir",
+        default=str(ANNOTATIONS_DIR),
+        help="Directory containing *_motion.json files",
+    )
+    motion_eval_all.add_argument("--model", default=None, help="Path to trained motion_classifier.joblib")
+    motion_eval_all.set_defaults(func=cmd_motion_eval_all)
+
+    motion_train = sub.add_parser(
+        "motion-train",
+        help="Train decision-tree motion classifier on manual annotations",
+    )
+    motion_train.add_argument(
+        "--annotations-dir",
+        default=str(ANNOTATIONS_DIR),
+        help="Directory containing *_motion.json files",
+    )
+    motion_train.add_argument("--max-depth", type=int, default=12)
+    motion_train.add_argument("--min-samples-leaf", type=int, default=25)
+    motion_train.add_argument("--smooth-window", type=int, default=7)
+    motion_train.add_argument("--seed", type=int, default=0)
+    motion_train.add_argument("--no-tune", action="store_true", help="Skip LOO hyperparameter search")
+    motion_train.add_argument("--model-output", default=str(DEFAULT_MODEL_PATH))
+    motion_train.add_argument("--tree-output", default=str(DEFAULT_TREE_TEXT_PATH))
+    motion_train.add_argument(
+        "--report-output",
+        default=str(ANNOTATIONS_DIR / "motion_classifier_report.json"),
+    )
+    motion_train.set_defaults(func=cmd_motion_train)
 
     return parser
 
